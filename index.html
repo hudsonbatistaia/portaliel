@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistemas · Jovem Aprendiz IEL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10213D;
+    --muted:#5C6B85;
+    --bg:#EEF1F6;
+    --surface:#FFFFFF;
+    --line:#DCE2EC;
+    --brand:#0B3D91;
+    --live:#0E9C8F;
+    --building:#B4791F;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:56px 24px 64px;
+  }
+  header{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:48px;
+  }
+  .mark{
+    width:48px;
+    height:48px;
+    border-radius:10px;
+    background:var(--brand);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:18px;
+    letter-spacing:0.02em;
+    flex-shrink:0;
+  }
+  h1{
+    font-size:26px;
+    font-weight:800;
+    margin:0 0 4px;
+    letter-spacing:-0.01em;
+  }
+  .sub{
+    color:var(--muted);
+    font-size:15px;
+    margin:0;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr;}
+    .wrap{padding:40px 18px 48px;}
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:4px solid var(--live);
+    border-radius:12px;
+    padding:22px 22px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .card.building{
+    border-left-color:var(--building);
+  }
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--live);
+  }
+  .card.building .status{
+    color:var(--building);
+  }
+  .status .dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:currentColor;
+  }
+  .card h2{
+    font-size:17px;
+    font-weight:700;
+    margin:0;
+  }
+  .card p{
+    font-size:14px;
+    line-height:1.5;
+    color:var(--muted);
+    margin:0;
+    flex-grow:1;
+  }
+  .open{
+    display:inline-block;
+    margin-top:4px;
+    font-size:14px;
+    font-weight:700;
+    color:var(--brand);
+    text-decoration:none;
+    padding:9px 0;
+    border-top:1px solid var(--line);
+  }
+  .open:hover{
+    text-decoration:underline;
+  }
+  .placeholder{
+    margin-top:4px;
+    font-size:14px;
+    color:var(--muted);
+    padding:9px 0;
+    border-top:1px solid var(--line);
+  }
+  footer{
+    margin-top:40px;
+    font-size:13px;
+    color:var(--muted);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="mark">IEL</div>
+      <div>
+        <h1>Sistemas do Jovem Aprendiz</h1>
+        <p class="sub">Acesso às ferramentas internas do programa Sou + IEL</p>
+      </div>
+    </header>
+
+    <div class="grid">
+
+      <div class="card">
+        <span class="status"><span class="dot"></span>No ar</span>
+        <h2>Painel Analítico de Contratos</h2>
+        <p>Acompanha a consolidação dos contratos de aprendizagem e mostra o que mudou a cada nova atualização.</p>
+        <a class="open" href="https://iel-painel-contratos.onrender.com/" target="_blank" rel="noopener">Abrir sistema</a>
+      </div>
+
+      <div class="card">
+        <span class="status"><span class="dot"></span>No ar</span>
+        <h2>Relatórios Personalizados do iScholar</h2>
+        <p>Consulta dados de alunos e turmas direto na base do iScholar, sem precisar abrir o sistema principal.</p>
+        <a class="open" href="https://iel-jovemaprendiz-2026.onrender.com/" target="_blank" rel="noopener">Abrir sistema</a>
+      </div>
+
+      <div class="card building">
+        <span class="status"><span class="dot"></span>Em construção</span>
+        <h2>Precificação de Cursos Livres</h2>
+        <p>Calcula o valor dos cursos livres oferecidos pelo IEL.</p>
+        <span class="placeholder">Ainda não disponível</span>
+      </div>
+
+      <div class="card building">
+        <span class="status"><span class="dot"></span>Em construção</span>
+        <h2>Calendários Jovem Aprendiz</h2>
+        <p>Gera o calendário geral de atividades teóricas e práticas do programa.</p>
+        <span class="placeholder">Ainda não disponível</span>
+      </div>
+
+    </div>
+
+    <footer>IEL Amazonas · Programa Jovem Aprendiz</footer>
+  </div>
+</body>
+</html>

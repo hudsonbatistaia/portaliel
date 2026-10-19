@@ -1033,6 +1033,39 @@
     tokenAtual: null
   };
 
+  // Login sempre atual nos links dos sistemas (19/10/2026).
+  // O portal renova o login a cada ~55 min; os links precisam acompanhar, senão o
+  // sistema aberto recebe um login vencido e devolve a pessoa para o portal.
+  function atualizarLinksSistemas() {
+    document.querySelectorAll('a.app-card[data-url]').forEach(function (a) { a.href = gerarUrlComToken(a.dataset.url); });
+  }
+  cliente.auth.onAuthStateChange(function (evento, session) {
+    if (session && (evento === 'TOKEN_REFRESHED' || evento === 'SIGNED_IN')) {
+      estado.tokenAtual = session;
+      setSharedCookie('sb_auth_token', session.access_token, 7);
+      atualizarLinksSistemas();
+    }
+  });
+  // No clique: se o login vence em menos de 2 minutos, renova antes de abrir o sistema.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a.app-card[data-url]') : null;
+    if (!a || !estado.tokenAtual) return;
+    var vence = (estado.tokenAtual.expires_at || 0) * 1000;
+    if (vence - Date.now() > 120000) { a.href = gerarUrlComToken(a.dataset.url); return; }
+    e.preventDefault();
+    var janela = window.open('about:blank', '_blank');
+    cliente.auth.refreshSession().then(function (r) {
+      var s = r && r.data && r.data.session;
+      if (s) {
+        estado.tokenAtual = s;
+        setSharedCookie('sb_auth_token', s.access_token, 7);
+        atualizarLinksSistemas();
+      }
+      var url = gerarUrlComToken(a.dataset.url);
+      if (janela) { janela.opener = null; janela.location.href = url; } else { window.location.href = url; }
+    });
+  }, true);
+
   // Ícones dos sistemas
   var ICONES = {
     contratos: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
@@ -1190,6 +1223,7 @@
       card.className = 'app-card' + (temAcesso ? '' : ' locked');
       if (temAcesso) {
         card.href = gerarUrlComToken(sis.url);
+        card.dataset.url = sis.url;
         card.target = '_blank';
         card.rel = 'noopener';
       }

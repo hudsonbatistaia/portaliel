@@ -1210,7 +1210,9 @@
       if (!sis.ativo) return;
 
       var temAcesso = estado.sessao.admin_geral || permitidos.indexOf(sis.codigo) !== -1;
-      if (temAcesso) totalLiberados++;
+      // Só mostra os sistemas liberados para a pessoa (30/10/2026)
+      if (!temAcesso) return;
+      totalLiberados++;
 
       // Filtro de busca
       if (filtroTexto) {
@@ -1255,7 +1257,12 @@
       grid.appendChild(card);
     });
 
-    document.getElementById('statusLiberados').textContent = totalLiberados + ' sistemas liberados para você';
+    if (totalLiberados === 0 && !filtroTexto) {
+      grid.innerHTML = '<p style="color:var(--text-muted); grid-column:1/-1;">Nenhum sistema liberado para você ainda. Fale com o administrador do portal.</p>';
+    }
+
+    document.getElementById('statusLiberados').textContent = totalLiberados === 1 ?
+      '1 sistema liberado para você' : totalLiberados + ' sistemas liberados para você';
   }
 
   // 7. Eventos de Login e Logout

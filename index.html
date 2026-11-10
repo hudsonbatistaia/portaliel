@@ -1372,8 +1372,7 @@
 
       tr.innerHTML = 
         '<td>' +
-          '<strong>' + esc(u.nome) + '</strong>' +
-          '<div style="font-size:12px; color:var(--text-muted);">' + esc(u.email) + '</div>' +
+          '<strong title="' + esc(u.email) + '">' + esc(u.nome || u.email) + '</strong>' +
         '</td>' +
         '<td>' +
           (u.admin_geral ? 
